@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public boolean validation() {
-//        Log.d("SENTI", inputEmail + " / " + inputPassword + " / " + (inputEmail.equals(emailOK)) + " / " + (inputPassword.equals(passwordOK)));
         return inputEmail.equals(emailOK) && inputPassword.equals(passwordOK);
     }
 }
