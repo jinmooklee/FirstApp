@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FirstApp</string>
+    <string name="t_login">LOGIN</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="or">Or</string>
+    <string name="login">Log in</string>
+    <string name="login_w_facebook">Login with Facebook</string>
+    <string name="find_password">Find Password</string>
+    <string name="sign_up">Sign Up</string>
+</resources>
