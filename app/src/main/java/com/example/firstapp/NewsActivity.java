@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -11,7 +12,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.textfield.TextInputEditText;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.imagepipeline.core.ImageTranscoderType;
+import com.facebook.imagepipeline.core.MemoryChunkType;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NewsActivity extends AppCompatActivity {
 
@@ -19,6 +39,8 @@ public class NewsActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private String[] mDataset = {"data1", "data2"};
+    // Instantiate the RequestQueue.
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +56,69 @@ public class NewsActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(mDataset);
-        mRecyclerView.setAdapter(mAdapter);
+
+        queue = Volley.newRequestQueue(this);
+        getNews();
+
+        //1. 화면이 로딩 -> 뉴스 정보를 받아온다
+        //2. 정보 -> 어댑터에 넘겨준다
+        //3. 어댑터 -> 셋팅
+    }
+
+    public void getNews() {
+
+        String url ="https://newsapi.org/v2/top-headlines?country=kr&apiKey=fd887757665e416bba3ae8da94d63b1a";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+//                        Log.d("NEWS", response);
+
+                        try {
+                            JSONObject jsonObj = new JSONObject(response);
+                            JSONArray arrayArticles = jsonObj.getJSONArray("articles");
+                            // response -> NewsData Class 분류
+                            List<NewsData> news = new ArrayList<>();
+                            for(int i=0,j=arrayArticles.length(); i<j; i++) {
+                                JSONObject obj = arrayArticles.getJSONObject(i);
+
+//                                Log.d("NEWS", obj.toString());
+
+                                NewsData newsData = new NewsData();
+                                newsData.setTitle(obj.getString("title"));
+                                newsData.setUrlToImage(obj.getString("urlToImage"));
+                                newsData.setContent(obj.getString("content"));
+                                newsData.setDescription(obj.getString("description"));
+                                news.add(newsData);
+                            }
+
+                            // specify an adapter (see also next example)
+                            mAdapter = new MyAdapter(news, NewsActivity.this);
+                            mRecyclerView.setAdapter(mAdapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+        }) {
+            @Override
+            public Map getHeaders() throws AuthFailureError {
+                Map params = new HashMap();
+                params.put("User-Agent", "Mozilla/5.0");
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
     }
 }

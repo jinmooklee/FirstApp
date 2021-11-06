@@ -36,6 +36,12 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+    // 카드뷰
+    implementation "androidx.cardview:cardview:1.0.0"
+    // fresco 페이스북에서 만든 이미지를 다루는 라이브러리
+    implementation 'com.facebook.fresco:fresco:2.6.0'
+    // Android 앱의 네트워킹을 더 쉽고, 무엇보다도 더 빠르게 하는 HTTP 라이브러리
+    implementation 'com.android.volley:volley:1.2.1'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     testImplementation 'junit:junit:'
