@@ -1,12 +1,6 @@
 package com.example.firstapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,10 +13,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.imagepipeline.core.ImagePipelineConfig;
-import com.facebook.imagepipeline.core.ImageTranscoderType;
-import com.facebook.imagepipeline.core.MemoryChunkType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +28,6 @@ public class NewsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private String[] mDataset = {"data1", "data2"};
     // Instantiate the RequestQueue.
     RequestQueue queue;
 
@@ -46,7 +35,7 @@ public class NewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView = findViewById(R.id.my_recycler_view);
 
         // user this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -58,6 +47,7 @@ public class NewsActivity extends AppCompatActivity {
 
 
         queue = Volley.newRequestQueue(this);
+
         getNews();
 
         //1. 화면이 로딩 -> 뉴스 정보를 받아온다
