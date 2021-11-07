@@ -21,6 +21,7 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private List<NewsData> mDataset;
+    private static View.OnClickListener onClickListener;
 
     /**
      * Provide a reference to the views for each data item
@@ -32,6 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView TextView_title;
         public TextView TextView_content;
         public SimpleDraweeView ImageView_title;
+        public View rootView;
 
         public MyViewHolder(View v) {
             super(v);
@@ -39,6 +41,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             TextView_title = v.findViewById(R.id.TextView_title);
             TextView_content = v.findViewById(R.id.TextView_content);
             ImageView_title = v.findViewById(R.id.ImageView_title);
+            rootView = v;
+            v.setClickable(true);
+            v.setEnabled(true);
+            v.setOnClickListener(onClickListener);
         }
     }
 
@@ -48,8 +54,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
      * @param myDataset String[] containing the data to populate views to be used
      * by RecyclerView.
      */
-    public MyAdapter(List<NewsData> myDataset, Context context) {
+    public MyAdapter(List<NewsData> myDataset, Context context, View.OnClickListener onClick) {
         mDataset = myDataset;
+        onClickListener = onClick;
         Fresco.initialize(context);
     }
 
@@ -83,12 +90,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 //        holder.ImageView_title.setImageURI(news.getUrlToImage());
         Uri uri = Uri.parse(news.getUrlToImage());
         holder.ImageView_title.setImageURI(uri);
+
+        //tag - label
+        holder.rootView.setTag(position);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mDataset == null ? 0 : mDataset.size();
+    }
+
+    public NewsData getNews(int position) {
+        return mDataset != null ? mDataset.get(position) : null;
     }
 }
 

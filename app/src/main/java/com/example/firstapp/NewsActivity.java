@@ -1,6 +1,9 @@
 package com.example.firstapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -85,7 +88,23 @@ public class NewsActivity extends AppCompatActivity {
                             }
 
                             // specify an adapter (see also next example)
-                            mAdapter = new MyAdapter(news, NewsActivity.this);
+                            mAdapter = new MyAdapter(news, NewsActivity.this, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Object obj = v.getTag();
+                                    if (obj != null) {
+                                        int position = (int) obj;
+                                        Intent intent = new Intent(NewsActivity.this, NewsViewActivity.class);
+
+                                        // 1. 본문
+                                        // 2. 전체
+                                            // 2-1. 하나씩 다
+                                            // 2-2. 한 번에 다
+                                        intent.putExtra("news", ((MyAdapter)mAdapter).getNews(position));
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
                             mRecyclerView.setAdapter(mAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -96,10 +115,11 @@ public class NewsActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("NEWSAPI", error.toString());
             }
 
         }) {
+            /** newsapi.org 에서 데이터 받아올 때 403에러 나서 추가한 부분 */
             @Override
             public Map getHeaders() throws AuthFailureError {
                 Map params = new HashMap();
