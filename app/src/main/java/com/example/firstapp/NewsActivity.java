@@ -95,11 +95,7 @@ public class NewsActivity extends AppCompatActivity {
                                     if (obj != null) {
                                         int position = (int) obj;
                                         Intent intent = new Intent(NewsActivity.this, NewsViewActivity.class);
-
-                                        // 1. 본문
-                                        // 2. 전체
-                                            // 2-1. 하나씩 다
-                                            // 2-2. 한 번에 다
+                                        // 값을 한 번에 다 넘기기
                                         intent.putExtra("news", ((MyAdapter)mAdapter).getNews(position));
                                         startActivity(intent);
                                     }
@@ -115,11 +111,11 @@ public class NewsActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("NEWSAPI", error.toString());
+                Log.d("NEWS-API", error.toString());
             }
 
         }) {
-            /** newsapi.org 에서 데이터 받아올 때 403에러 나서 추가한 부분 */
+            /** https://newsapi.org 에서 데이터 받아올 때 403에러 나서 추가한 부분 */
             @Override
             public Map getHeaders() throws AuthFailureError {
                 Map params = new HashMap();

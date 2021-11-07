@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    private List<NewsData> mDataset;
+    private final List<NewsData> mDataset;
     private static View.OnClickListener onClickListener;
 
     /**
@@ -79,9 +78,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // contents of the view with that element
         NewsData news = mDataset.get(position);
         holder.TextView_title.setText(news.getTitle());
-        String content = news.getContent();
-        content = news.getDescription();
-        if (content != "null" && content.length() >0 ) {
+        String content = news.getDescription();
+        /* String null 검사를 깔끔하게 하려면 NewsActivity.java 에서 JSONObject.isNull() 을 사용해야함
+          여기서는 null 이 문자열 "null" 로 넘어왔기 때문에 아래처럼 검사함
+         */
+        if (!content.equals("null") && content.length() >0 ) {
             holder.TextView_content.setText(content);
         } else {
             holder.TextView_content.setText("-");
