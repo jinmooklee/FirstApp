@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "74853212373",
+    "project_id": "sentilab-6fb97",
+    "storage_bucket": "sentilab-6fb97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74853212373:android:6960404a864ffc3507825c",
+        "android_client_info": {
+          "package_name": "com.example.firstapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74853212373-ftm1btardmgv5al8qap2fm0e4op8b8oj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkf5y_dFB2oBz4fHNzJDJ7Rvw1RKdoTG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "74853212373-ftm1btardmgv5al8qap2fm0e4op8b8oj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
