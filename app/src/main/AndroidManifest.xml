@@ -12,14 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirstApp">
         <activity
-            android:name=".FaceActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".ChatActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".FaceActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
             <meta-data
                 android:name="com.google.mlkit.vision.DEPENDENCIES"
                 android:value="face" />
@@ -37,8 +42,8 @@
             android:name=".NewsActivity"
             android:exported="true">
             <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".LoginResultActivity"
@@ -47,8 +52,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
-
     </application>
 
 </manifest>
